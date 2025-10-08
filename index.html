@@ -1,0 +1,346 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Oásis Verde e Limpo na Escola - Guia Interativo</title>
+    <!-- Carrega Tailwind CSS para estilização moderna e responsiva -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Configuração do Tailwind para usar uma fonte mais agradável e cores temáticas -->
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'primary-green': '#10B981', // Emerald 500
+                        'secondary-green': '#059669', // Emerald 600
+                        'tertiary-bg': '#F0FDF4', // Emerald 50
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        /* Estilos customizados para melhorar o visual */
+        body {
+            background-color: #f7f7f7;
+            font-family: 'Inter', sans-serif;
+        }
+        /* Efeito de sombra e transição para os cards */
+        .step-card {
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            cursor: pointer;
+        }
+        .step-card:hover {
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+        }
+        /* Estilo para a barra de progresso */
+        #progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+        /* Estilos para as tags das equipes */
+        .team-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            margin-top: 4px; /* Espaçamento leve em mobile */
+            font-size: 0.75rem; /* text-xs */
+            font-weight: 600; /* font-semibold */
+            border-radius: 9999px; /* rounded-full */
+        }
+    </style>
+</head>
+<body class="p-4 sm:p-8">
+
+    <div id="app" class="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-6 sm:p-10">
+        
+        <!-- Cabeçalho e Título -->
+        <header class="text-center mb-8 sm:mb-12">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary-green tracking-tight mb-2">
+                Oásis Verde e Limpo na Escola
+            </h1>
+            <p class="text-lg text-gray-600">Guia Interativo de Implementação do Projeto por Turmas</p>
+            <div class="mt-4 flex items-center justify-center space-x-2 text-sm text-gray-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-green" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM6 15a1 1 0 100 2h8a1 1 0 100-2H6z" />
+                    <path fill-rule="evenodd" d="M18 10a2 2 0 00-2-2H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6zM9 13a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd" />
+                </svg>
+                <span>Acompanhe o seu progresso e as responsabilidades de cada turma!</span>
+            </div>
+        </header>
+
+        <!-- Barra de Progresso -->
+        <div class="mb-8">
+            <h2 class="text-xl font-semibold text-gray-700 mb-2">Progresso do Projeto</h2>
+            <div class="bg-gray-200 rounded-full h-3">
+                <div id="progress-bar" class="bg-primary-green h-3 rounded-full" style="width: 0%"></div>
+            </div>
+            <p id="progress-text" class="text-right text-sm font-medium mt-1 text-primary-green">0% Concluído</p>
+        </div>
+
+        <!-- Lista de Etapas (Onde a mágica do JS acontece) -->
+        <div id="project-steps" class="space-y-4">
+            <!-- Os cards das etapas serão inseridos aqui pelo JavaScript -->
+        </div>
+
+    </div>
+
+    <script>
+        // Variáveis globais para rastrear o estado
+        const stepsData = [
+            {
+                id: 1,
+                title: "Fase 1: Planejamento e Engajamento",
+                icon: "📅",
+                description: "Criação da equipe, diagnóstico da escola e definição de metas. Sem um bom plano, o oásis não floresce!",
+                tasks: [
+                    { text: "Formar o 'Comitê Verde' (alunos, professores, pais).", team: "Comitê Organizador" },
+                    { text: "Realizar um diagnóstico da área a ser transformada (tamanho, sol, água).", team: "Turma B Tarde" },
+                    { text: "Definir o orçamento e as necessidades de materiais.", team: "Comitê Organizador" },
+                    { text: "Obter aprovação e apoio da direção da escola.", team: "Comitê Organizador" },
+                ],
+                isCompleted: false,
+            },
+            {
+                id: 2,
+                title: "Fase 2: Preparação do Local e Design",
+                icon: "🛠️",
+                description: "Organização física do espaço e desenho do layout, pensando na sustentabilidade e estética.",
+                tasks: [
+                    { text: "Limpar a área, removendo detritos e lixo.", team: "Turma A Manhã" },
+                    { text: "Criar o desenho do layout (caminhos, canteiros, jardim vertical).", team: "Turma B Tarde" },
+                    { text: "Preparar o solo com compostagem e adubo orgânico.", team: "Turma A Manhã" },
+                    { text: "Coletar pneus, garrafas PET e outros materiais para reciclagem.", team: "Ambas as Turmas" },
+                ],
+                isCompleted: false,
+            },
+            {
+                id: 3,
+                title: "Fase 3: Execução e Plantio",
+                icon: "🌱",
+                description: "O momento de colocar a mão na massa! Transforme o papel em realidade.",
+                tasks: [
+                    { text: "Construir os canteiros e as estruturas do jardim vertical.", team: "Turma B Tarde" },
+                    { text: "Instalar as lixeiras de separação de resíduos.", team: "Turma A Manhã" },
+                    { text: "Fazer o plantio das mudas e sementes (priorizar espécies nativas).", team: "Ambas as Turmas" },
+                    { text: "Criar placas de identificação para as plantas e lixeiras.", team: "Turma B Tarde" },
+                ],
+                isCompleted: false,
+            },
+            {
+                id: 4,
+                title: "Fase 4: Monitoramento e Sustentabilidade",
+                icon: "💧",
+                description: "Manter o Oásis vivo e funcionando como um centro de educação ambiental contínua.",
+                tasks: [
+                    { text: "Criar um cronograma de rega e manutenção das plantas.", team: "Turma A Manhã" },
+                    { text: "Estabelecer a rotina de limpeza e coleta seletiva.", team: "Ambas as Turmas" },
+                    { text: "Organizar a primeira 'Aula no Oásis' para celebrar a inauguração.", team: "Comitê Organizador" },
+                    { text: "Documentar o projeto (fotos, vídeos) para inspirar outras escolas.", team: "Comitê Organizador" },
+                ],
+                isCompleted: false,
+            },
+        ];
+
+        const stepsContainer = document.getElementById('project-steps');
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+
+        // Função utilitária para mapear o nome da equipe às classes de cores
+        function getTeamBadgeClasses(teamName) {
+            switch (teamName) {
+                case "Turma A Manhã":
+                    return "bg-blue-100 text-blue-800";
+                case "Turma B Tarde":
+                    return "bg-red-100 text-red-800";
+                case "Comitê Organizador":
+                    return "bg-yellow-100 text-yellow-800";
+                case "Ambas as Turmas":
+                    return "bg-primary-green text-white";
+                default:
+                    return "bg-gray-100 text-gray-800";
+            }
+        }
+
+        // Função para carregar o estado do localStorage (para persistência no navegador)
+        function loadState() {
+            const savedState = localStorage.getItem('oasisProjectState');
+            if (savedState) {
+                const loadedData = JSON.parse(savedState);
+                // Mescla os dados salvos com os dados originais para garantir que as tarefas existam
+                stepsData.forEach(step => {
+                    const loadedStep = loadedData.find(ld => ld.id === step.id);
+                    if (loadedStep) {
+                        step.isCompleted = loadedStep.isCompleted;
+                    }
+                });
+            }
+        }
+
+        // Função para salvar o estado no localStorage
+        function saveState() {
+            localStorage.setItem('oasisProjectState', JSON.stringify(stepsData));
+        }
+
+        // Função para atualizar a barra de progresso
+        function updateProgress() {
+            const completedSteps = stepsData.filter(step => step.isCompleted).length;
+            const totalSteps = stepsData.length;
+            const percentage = Math.round((completedSteps / totalSteps) * 100);
+
+            progressBar.style.width = `${percentage}%`;
+            progressText.textContent = `${percentage}% Concluído (${completedSteps}/${totalSteps} Fases)`;
+
+            if (percentage === 100) {
+                progressText.classList.remove('text-primary-green');
+                progressText.classList.add('text-secondary-green', 'font-extrabold');
+                // Alerta visual de conclusão - usando uma div customizada, nunca alert()
+                showCompletionMessage();
+            } else {
+                progressText.classList.add('text-primary-green');
+                progressText.classList.remove('text-secondary-green', 'font-extrabold');
+            }
+        }
+
+        // Função para alternar o estado de conclusão da fase
+        function toggleCompletion(stepId) {
+            const step = stepsData.find(s => s.id === stepId);
+            if (step) {
+                step.isCompleted = !step.isCompleted;
+                saveState();
+                renderSteps(); // Renderiza novamente para atualizar a UI
+                updateProgress();
+            }
+        }
+
+        // Função para alternar a visibilidade dos detalhes (accordion)
+        function toggleDetails(stepId) {
+            const detailsElement = document.getElementById(`details-${stepId}`);
+            const chevronIcon = document.getElementById(`chevron-${stepId}`);
+
+            if (detailsElement) {
+                const isHidden = detailsElement.classList.contains('hidden');
+                
+                // Fecha todos os outros
+                document.querySelectorAll('.step-details').forEach(el => {
+                    if (el.id !== `details-${stepId}`) {
+                        el.classList.add('hidden');
+                    }
+                });
+                document.querySelectorAll('.chevron-icon').forEach(el => {
+                    if (el.id !== `chevron-${stepId}`) {
+                        el.classList.remove('rotate-180');
+                    }
+                });
+                
+                // Alterna o atual
+                detailsElement.classList.toggle('hidden', !isHidden);
+                chevronIcon.classList.toggle('rotate-180', isHidden);
+            }
+        }
+
+        // Função para exibir mensagem de conclusão
+        function showCompletionMessage() {
+            let messageBox = document.getElementById('completion-message');
+            if (!messageBox) {
+                messageBox = document.createElement('div');
+                messageBox.id = 'completion-message';
+                messageBox.className = 'fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50';
+                messageBox.innerHTML = `
+                    <div class="bg-white rounded-xl p-8 text-center shadow-2xl max-w-sm">
+                        <svg class="w-16 h-16 text-primary-green mx-auto mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        <h3 class="text-2xl font-bold text-secondary-green mb-3">Parabéns! Projeto Concluído!</h3>
+                        <p class="text-gray-600 mb-4">O seu 'Oásis Verde e Limpo' está pronto para ser um modelo de sustentabilidade na escola.</p>
+                        <button onclick="document.getElementById('completion-message').remove()" class="px-6 py-2 bg-primary-green text-white font-semibold rounded-lg hover:bg-secondary-green transition duration-200">
+                            Fechar
+                        </button>
+                    </div>
+                `;
+                document.body.appendChild(messageBox);
+            }
+        }
+
+        // Função principal para renderizar as etapas
+        function renderSteps() {
+            stepsContainer.innerHTML = ''; // Limpa o conteúdo anterior
+
+            stepsData.forEach(step => {
+                const isCompleted = step.isCompleted;
+                const baseClasses = "step-card p-5 rounded-xl transition duration-300 transform border-b-4";
+                const colorClasses = isCompleted 
+                    ? "bg-tertiary-bg border-secondary-green hover:bg-emerald-100" 
+                    : "bg-white border-gray-200 hover:bg-gray-50";
+
+                const completedIcon = isCompleted
+                    ? `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-secondary-green" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" /></svg>`
+                    : `<svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" /></svg>`;
+
+                // Estrutura do Card da Etapa
+                const stepCard = document.createElement('div');
+                stepCard.className = `${baseClasses} ${colorClasses}`;
+                stepCard.innerHTML = `
+                    <!-- Título Principal da Etapa (Clica para expandir) -->
+                    <div onclick="toggleDetails(${step.id})" class="flex justify-between items-center">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-3xl">${step.icon}</span>
+                            <div>
+                                <h3 class="text-xl font-bold ${isCompleted ? 'text-secondary-green line-through' : 'text-gray-800'}">
+                                    ${step.title}
+                                </h3>
+                                <p class="text-sm ${isCompleted ? 'text-secondary-green font-medium' : 'text-gray-500'}">
+                                    ${isCompleted ? 'Fase Concluída!' : step.description}
+                                </p>
+                            </div>
+                        </div>
+                        <div class="flex items-center space-x-3">
+                             <svg id="chevron-${step.id}" class="chevron-icon h-6 w-6 text-gray-500 transform transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                             </svg>
+                        </div>
+                    </div>
+
+                    <!-- Detalhes da Etapa (Conteúdo Acordeão) -->
+                    <div id="details-${step.id}" class="step-details mt-4 pt-4 border-t border-gray-100 hidden">
+                        <p class="text-sm text-gray-700 mb-3 font-semibold">Tarefas Essenciais e Responsáveis:</p>
+                        <ul class="list-inside space-y-3 text-gray-600">
+                            ${step.tasks.map(task => `
+                                <li class="flex flex-col sm:flex-row sm:items-center sm:justify-between p-2 rounded-md ${isCompleted ? 'bg-emerald-50' : 'hover:bg-gray-50'}">
+                                    <div class="flex items-start space-x-2">
+                                        <svg class="h-5 w-5 ${isCompleted ? 'text-primary-green' : 'text-gray-400'} flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path></svg>
+                                        <span class="${isCompleted ? 'line-through text-gray-500' : 'text-gray-700'}">${task.text}</span>
+                                    </div>
+                                    <span class="team-badge ${getTeamBadgeClasses(task.team)}">
+                                        ${task.team}
+                                    </span>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        
+                        <!-- Botão de Conclusão -->
+                        <div class="mt-6 flex justify-end">
+                            <button onclick="toggleCompletion(${step.id})" class="flex items-center space-x-2 px-4 py-2 text-sm font-medium rounded-full transition duration-150 ease-in-out ${isCompleted ? 'bg-secondary-green text-white hover:bg-primary-green' : 'bg-primary-green text-white hover:bg-secondary-green'}" title="${isCompleted ? 'Desmarcar Fase' : 'Marcar Fase como Concluída'}">
+                                ${isCompleted ? completedIcon : ''}
+                                <span>${isCompleted ? 'Marcar como PENDENTE' : 'Marcar como CONCLUÍDA'}</span>
+                            </button>
+                        </div>
+                    </div>
+                `;
+                stepsContainer.appendChild(stepCard);
+            });
+        }
+
+        // Inicialização
+        document.addEventListener('DOMContentLoaded', () => {
+            loadState(); // Tenta carregar o estado salvo
+            renderSteps(); // Renderiza a interface
+            updateProgress(); // Atualiza a barra de progresso
+        });
+    </script>
+</body>
+</html>
+
