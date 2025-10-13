@@ -1,6 +1,6 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -30,35 +30,44 @@
             background-color: #f7f7f7;
             font-family: 'Inter', sans-serif;
         }
+
         /* Efeito de sombra e transição para os cards */
         .step-card {
             transition: all 0.3s ease-in-out;
             box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
             cursor: pointer;
         }
+
         .step-card:hover {
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
             transform: translateY(-2px);
         }
+
         /* Estilo para a barra de progresso */
         #progress-bar {
             transition: width 0.5s ease-in-out;
         }
+
         /* Estilos para as tags das equipes */
         .team-badge {
             display: inline-block;
             padding: 2px 8px;
-            margin-top: 4px; /* Espaçamento leve em mobile */
-            font-size: 0.75rem; /* text-xs */
-            font-weight: 600; /* font-semibold */
-            border-radius: 9999px; /* rounded-full */
+            margin-top: 4px;
+            /* Espaçamento leve em mobile */
+            font-size: 0.75rem;
+            /* text-xs */
+            font-weight: 600;
+            /* font-semibold */
+            border-radius: 9999px;
+            /* rounded-full */
         }
     </style>
 </head>
+
 <body class="p-4 sm:p-8">
 
     <div id="app" class="max-w-4xl mx-auto bg-white rounded-xl shadow-2xl p-6 sm:p-10">
-        
+
         <!-- Cabeçalho e Título -->
         <header class="text-center mb-8 sm:mb-12">
             <h1 class="text-3xl sm:text-4xl font-extrabold text-secondary-green tracking-tight mb-2">
@@ -66,9 +75,13 @@
             </h1>
             <p class="text-lg text-gray-600">Guia Interativo de Implementação do Projeto por Turmas</p>
             <div class="mt-4 flex items-center justify-center space-x-2 text-sm text-gray-500">
-                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-green" viewBox="0 0 20 20" fill="currentColor">
-                    <path d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM6 15a1 1 0 100 2h8a1 1 0 100-2H6z" />
-                    <path fill-rule="evenodd" d="M18 10a2 2 0 00-2-2H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6zM9 13a1 1 0 000 2h2a1 1 0 100-2H9z" clip-rule="evenodd" />
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-primary-green" viewBox="0 0 20 20"
+                    fill="currentColor">
+                    <path
+                        d="M7 3a1 1 0 000 2h6a1 1 0 100-2H7zM4 7a1 1 0 011-1h10a1 1 0 110 2H5a1 1 0 01-1-1zM6 15a1 1 0 100 2h8a1 1 0 100-2H6z" />
+                    <path fill-rule="evenodd"
+                        d="M18 10a2 2 0 00-2-2H4a2 2 0 00-2 2v6a2 2 0 002 2h12a2 2 0 002-2v-6zM9 13a1 1 0 000 2h2a1 1 0 100-2H9z"
+                        clip-rule="evenodd" />
                 </svg>
                 <span>Acompanhe o seu progresso e as responsabilidades de cada turma!</span>
             </div>
@@ -225,7 +238,7 @@
 
             if (detailsElement) {
                 const isHidden = detailsElement.classList.contains('hidden');
-                
+
                 // Fecha todos os outros
                 document.querySelectorAll('.step-details').forEach(el => {
                     if (el.id !== `details-${stepId}`) {
@@ -237,7 +250,7 @@
                         el.classList.remove('rotate-180');
                     }
                 });
-                
+
                 // Alterna o atual
                 detailsElement.classList.toggle('hidden', !isHidden);
                 chevronIcon.classList.toggle('rotate-180', isHidden);
@@ -272,8 +285,8 @@
             stepsData.forEach(step => {
                 const isCompleted = step.isCompleted;
                 const baseClasses = "step-card p-5 rounded-xl transition duration-300 transform border-b-4";
-                const colorClasses = isCompleted 
-                    ? "bg-tertiary-bg border-secondary-green hover:bg-emerald-100" 
+                const colorClasses = isCompleted
+                    ? "bg-tertiary-bg border-secondary-green hover:bg-emerald-100"
                     : "bg-white border-gray-200 hover:bg-gray-50";
 
                 const completedIcon = isCompleted
@@ -341,6 +354,17 @@
             updateProgress(); // Atualiza a barra de progresso
         });
     </script>
-</body>
-</html>
+    
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JG4BBS3R0H"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
+        gtag('config', 'G-JG4BBS3R0H');
+    </script>
+
+</body>
+
+</html>
